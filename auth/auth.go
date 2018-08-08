@@ -262,8 +262,6 @@ func (c *Client) VerifyIDToken(ctx context.Context, idToken string) (*Token, err
 	} else if payload.Issuer != issuer {
 		err = fmt.Errorf("ID token has invalid 'iss' (issuer) claim; expected %q but got %q; %s; %s",
 			issuer, payload.Issuer, projectIDMsg, verifyTokenMsg)
-	} else if payload.IssuedAt > clk.Now().Unix() {
-		err = fmt.Errorf("ID token issued at future timestamp: %d", payload.IssuedAt)
 	} else if payload.Expires < clk.Now().Unix() {
 		err = fmt.Errorf("ID token has expired at: %d", payload.Expires)
 	} else if payload.Subject == "" {
